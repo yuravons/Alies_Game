@@ -12,7 +12,7 @@ import android.widget.TextView;
 public class ThirdActivity extends AppCompatActivity {
 
     private Button btn3;
-    private SeekBar seekBar1, seekBar2;
+    private SeekBar words_count, time;
     private TextView textView1, textView2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,19 +23,19 @@ public class ThirdActivity extends AppCompatActivity {
         textView1 = (TextView) findViewById(R.id.textView7);
         textView2 = (TextView) findViewById(R.id.textView8);
 
-        seekBar1 = (SeekBar) findViewById(R.id.seekBar1);
-        seekBar2 = (SeekBar) findViewById(R.id.seekBar2);
+        words_count = (SeekBar) findViewById(R.id.seekBar1);
+        time = (SeekBar) findViewById(R.id.seekBar2);
 
-        seekBar1.setMin(10);
-        seekBar1.setMax(200);
+        words_count.setMin(10);
+        words_count.setMax(200);
 
-        seekBar2.setMin(10);
-        seekBar2.setMax(120);
+        time.setMin(10);
+        time.setMax(120);
 
-        seekBar1.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+        words_count.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                textView1.setText("" + i + "%");
+                textView1.setText("" + i);
             }
 
             @Override
@@ -48,10 +48,10 @@ public class ThirdActivity extends AppCompatActivity {
 
             }
         });
-        seekBar2.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+        time.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                textView2.setText("" + i + "%");
+                textView2.setText("" + i);
             }
 
             @Override
@@ -74,8 +74,20 @@ public class ThirdActivity extends AppCompatActivity {
                     public void onClick(View view) {
                         Intent int_btn2 = new Intent(ThirdActivity.this, Levels.class);
                         startActivity(int_btn2);
+                        sendWordsCount();
+                        sendTime();
                     }
                 }
         );
+    }
+    public void sendWordsCount() {
+        Intent intent = new Intent(this, StartGame.class);
+        intent.putExtra("WORDS_COUNT", textView1.getText().toString());
+        startActivity(intent);
+    }
+    public void sendTime() {
+        Intent intent = new Intent(this, StartGame.class);
+        intent.putExtra("TIME", textView2.getText().toString());
+        startActivity(intent);
     }
 }

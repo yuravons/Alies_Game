@@ -12,14 +12,14 @@ import android.widget.TextView;
 public class StartGame extends AppCompatActivity {
 
     private Button btn03;
-
+    private TextView tvWordsCount;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_game);
         addListenerOnButton();
 
-        Intent intent =getIntent();
+        Intent intent = getIntent();
 
         String name1 = intent.getStringExtra("TEAM_1");
         TextView j = (TextView)findViewById(R.id.textView9);
@@ -28,6 +28,12 @@ public class StartGame extends AppCompatActivity {
         String name2= intent.getStringExtra("TEAM_2");
         TextView j1 = (TextView)findViewById(R.id.textView10);
         j1.setText(name2);
+
+        String time = getIntent().getStringExtra("TIME");
+
+        String words_count = getIntent().getStringExtra("WORDS_COUNT");
+        tvWordsCount = (TextView)findViewById(R.id.textView5);
+        tvWordsCount.setText(words_count);
     }
 
     public void addListenerOnButton() {
