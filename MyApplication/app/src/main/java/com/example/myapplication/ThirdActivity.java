@@ -72,7 +72,7 @@ public class ThirdActivity extends AppCompatActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Intent int_btn2 = new Intent(ThirdActivity.this, FourthActivity.class);
+                        Intent int_btn2 = new Intent(ThirdActivity.this, Levels.class);
                         startActivity(int_btn2);
                     }
                 }
