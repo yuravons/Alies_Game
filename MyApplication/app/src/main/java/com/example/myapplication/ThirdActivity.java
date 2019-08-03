@@ -26,6 +26,12 @@ public class ThirdActivity extends AppCompatActivity {
         seekBar1 = (SeekBar) findViewById(R.id.seekBar1);
         seekBar2 = (SeekBar) findViewById(R.id.seekBar2);
 
+        seekBar1.setMin(10);
+        seekBar1.setMax(200);
+
+        seekBar2.setMin(10);
+        seekBar2.setMax(120);
+
         seekBar1.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
