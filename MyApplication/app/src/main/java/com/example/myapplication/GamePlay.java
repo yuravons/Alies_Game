@@ -8,6 +8,10 @@ import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.util.Log;
+
+import java.util.ArrayList;
+import java.util.Random;
 
 import java.sql.Time;
 import java.util.Locale;
@@ -24,6 +28,7 @@ public class GamePlay extends AppCompatActivity {
     private CountDownTimer mCountDownTimer;
     private boolean mTimerRunning;
 
+    private ArrayList <Integer> arr = new ArrayList<Integer>();
     private long mTimeLeftMilliSeconds;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,8 +46,8 @@ public class GamePlay extends AppCompatActivity {
 
         addListenerOnButton();
 
-        addListenerOnButtonYes();
-        addListenerOnButtonNo();
+        //addListenerOnButtonYes();
+        //addListenerOnButtonNo();
 
         updateCountDownText();
     }
@@ -52,6 +57,9 @@ public class GamePlay extends AppCompatActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        TextView tx = (TextView)findViewById(R.id.textView14);
+                        tx.setText(RandomWord());
+
                         if (mTimerRunning) {
                             pauseTimer();
                         } else {
@@ -119,5 +127,30 @@ public class GamePlay extends AppCompatActivity {
         String timeLeftFormatted = String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds);
 
         tvTime.setText(timeLeftFormatted);
+    }
+    private String RandomWord() {
+        Integer randNumber = 0;
+
+        arr.add(1);
+        Boolean isFlag = false;
+        EasyWord easy_word = new EasyWord();
+
+        int i = 0;
+        Boolean isGenerate = true;
+        do {
+            if (isGenerate)
+                randNumber = new Random().nextInt(50);
+            if (randNumber != arr.get(i)) {
+                isFlag = true;
+                isGenerate = false;
+            } else {
+                isFlag = false;
+                i = 0;
+                isGenerate = true;
+            }
+        } while (++i < arr.size());
+        arr.add(randNumber);
+        String sWord = easy_word.getWord(randNumber);
+        return sWord;
     }
 }
