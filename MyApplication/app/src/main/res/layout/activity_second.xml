@@ -52,8 +52,9 @@
         android:layout_marginStart="16dp"
         android:layout_marginBottom="14dp"
         android:ems="10"
-        android:inputType="textPersonName"
         android:hint="Ведіть назву команди"
+        android:inputType="textPersonName"
+        android:text="слоники"
         app:layout_constraintBottom_toTopOf="@+id/textView3"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
@@ -65,8 +66,9 @@
         android:layout_marginStart="16dp"
         android:layout_marginBottom="125dp"
         android:ems="10"
-        android:inputType="textPersonName"
         android:hint="Ведіть назву команди"
+        android:inputType="textPersonName"
+        android:text="півники"
         app:layout_constraintBottom_toTopOf="@+id/button3"
         app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
