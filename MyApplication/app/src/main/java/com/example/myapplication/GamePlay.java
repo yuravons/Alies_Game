@@ -20,7 +20,7 @@ import java.util.Timer;
 public class GamePlay extends AppCompatActivity {
 
     private String sTeam1_Name, sTeam2_Name;
-    private Integer nGuessedWords, nSkippedWords;
+    private Integer nGuessedWords = 0, nSkippedWords = 0;
 
     private String sTime;
     private TextView tvTime, tvSkippedWord, tvGuessedWord;
@@ -43,11 +43,10 @@ public class GamePlay extends AppCompatActivity {
         tvSkippedWord = (TextView)findViewById(R.id.textView20);
 
         btnStart = (Button) findViewById(R.id.button11);
+        btnYes = (Button) findViewById(R.id.button9);
+        btnNo = (Button) findViewById(R.id.button10);
 
         addListenerOnButton();
-
-        //addListenerOnButtonYes();
-        //addListenerOnButtonNo();
 
         updateCountDownText();
     }
@@ -57,9 +56,7 @@ public class GamePlay extends AppCompatActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        TextView tx = (TextView)findViewById(R.id.textView14);
-                        tx.setText(RandomWord());
-
+                        setWord();
                         if (mTimerRunning) {
                             pauseTimer();
                         } else {
@@ -68,32 +65,32 @@ public class GamePlay extends AppCompatActivity {
                     }
                 }
         );
-    }
-
-    public void addListenerOnButtonYes() {
         btnYes.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         nGuessedWords += 1;
                         tvGuessedWord.setText(String.valueOf(nGuessedWords));
+                        setWord();
                     }
                 }
         );
-    }
-
-    public void addListenerOnButtonNo() {
         btnNo.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         nSkippedWords += 1;
                         tvSkippedWord.setText(String.valueOf(nSkippedWords));
+                        setWord();
                     }
                 }
         );
     }
 
+    private void setWord() {
+        TextView tx = (TextView) findViewById(R.id.textView14);
+        tx.setText(RandomWord());
+    }
     private void startTimer() {
         mCountDownTimer = new CountDownTimer(mTimeLeftMilliSeconds, 1000) {
             @Override
