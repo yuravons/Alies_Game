@@ -12,15 +12,32 @@ import android.widget.TextView;
 public class StartGame extends AppCompatActivity {
 
     private Button btn03;
-    private TextView tvWordsCount, tvTeam1_Name, tvTeam2_Name;
+    private TextView tvWordsCount, tvTeam1_Name, tvTeam2_Name,TextCountTeam1,TextCountTeam2,tvGameRoundCount, TeamPlay;
     private String sTeam1_Name, sTeam2_Name;
     private String sCountWords, sTime;
+    private Integer CountTeam1 = 0,CountTeam2 = 0,GameCount = 0,RaundCount = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_game);
         addListenerOnButton();
-        
+
+        TextCountTeam1 = (TextView)findViewById(R.id.textView11);
+        TextCountTeam1.setText(String.valueOf(CountTeam1));
+        TextCountTeam2 = (TextView)findViewById(R.id.textView12);
+        TextCountTeam2.setText(String.valueOf(CountTeam2));
+        tvGameRoundCount = (TextView)findViewById(R.id.textView13);
+        tvGameRoundCount.setText("Раунд "+String.valueOf(RaundCount)+" \\ Гра "+String.valueOf(GameCount));
+
+
+        TeamPlay = (TextView)findViewById(R.id.textView16);
+        if (true){
+            TeamPlay.setText(sTeam1_Name);
+        }
+        else {
+            TeamPlay.setText(sTeam2_Name);
+        }
+
         sTeam1_Name = getIntent().getStringExtra("TEAM_1");
         tvTeam1_Name = (TextView)findViewById(R.id.textView9);
         tvTeam1_Name.setText(sTeam1_Name);
