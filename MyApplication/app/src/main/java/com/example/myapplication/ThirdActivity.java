@@ -78,27 +78,21 @@ public class ThirdActivity extends AppCompatActivity {
                     public void onClick(View view) {
                         Intent int_btn2 = new Intent(ThirdActivity.this, Levels.class);
                         sendTeamsNames(int_btn2);
+                        sendWordsCount(int_btn2);
+                        sendTime(int_btn2);
                         startActivity(int_btn2);
-                        //sendWordsCount();
-                        //sendTime();
                     }
                 }
         );
     }
     public void sendTeamsNames(Intent _intent) {
-        //Intent intent = new Intent(this, StartGame.class);
         _intent.putExtra("TEAM_1", sTeam1_Name);
         _intent.putExtra("TEAM_2", sTeam2_Name);
-        //startActivity(intent);
     }
-    public void sendWordsCount() {
-        Intent intent = new Intent(this, StartGame.class);
-        intent.putExtra("WORDS_COUNT", textView1.getText().toString());
-        startActivity(intent);
+    public void sendWordsCount(Intent _intent) {
+        _intent.putExtra("WORDS_COUNT", textView1.getText().toString());
     }
-    public void sendTime() {
-        Intent intent = new Intent(this, StartGame.class);
-        intent.putExtra("TIME", textView2.getText().toString());
-        startActivity(intent);
+    public void sendTime(Intent _intent) {
+        _intent.putExtra("TIME", textView2.getText().toString());
     }
 }
