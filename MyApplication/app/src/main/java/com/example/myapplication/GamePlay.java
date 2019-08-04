@@ -20,7 +20,7 @@ public class GamePlay extends AppCompatActivity {
 
     private String sTime;
     private TextView tvTime, tvSkippedWord, tvGuessedWord;
-    private Button btnStart;
+    private Button btnStart, btnYes, btnNo;
     private CountDownTimer mCountDownTimer;
     private boolean mTimerRunning;
 
@@ -30,14 +30,20 @@ public class GamePlay extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_play);
 
-
-
         sTime = getIntent().getStringExtra("TIME");
         mTimeLeftMilliSeconds = Integer.parseInt(sTime) * 1000;
         tvTime  = (TextView)findViewById(R.id.textView21);
+
+        tvGuessedWord = (TextView)findViewById(R.id.textView17);
+        tvSkippedWord = (TextView)findViewById(R.id.textView20);
+
         btnStart = (Button) findViewById(R.id.button11);
 
         addListenerOnButton();
+
+        addListenerOnButtonYes();
+        addListenerOnButtonNo();
+
         updateCountDownText();
     }
 
@@ -51,6 +57,30 @@ public class GamePlay extends AppCompatActivity {
                         } else {
                             startTimer();
                         }
+                    }
+                }
+        );
+    }
+
+    public void addListenerOnButtonYes() {
+        btnYes.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        nGuessedWords += 1;
+                        tvGuessedWord.setText(String.valueOf(nGuessedWords));
+                    }
+                }
+        );
+    }
+
+    public void addListenerOnButtonNo() {
+        btnNo.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        nSkippedWords += 1;
+                        tvSkippedWord.setText(String.valueOf(nSkippedWords));
                     }
                 }
         );
