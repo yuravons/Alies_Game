@@ -16,8 +16,10 @@ import java.util.Timer;
 public class GamePlay extends AppCompatActivity {
 
     private String sTeam1_Name, sTeam2_Name;
+    private Integer nGuessedWords, nSkippedWords;
+
     private String sTime;
-    private TextView tvTime;
+    private TextView tvTime, tvSkippedWord, tvGuessedWord;
     private Button btnStart;
     private CountDownTimer mCountDownTimer;
     private boolean mTimerRunning;
@@ -27,6 +29,8 @@ public class GamePlay extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_play);
+
+
 
         sTime = getIntent().getStringExtra("TIME");
         mTimeLeftMilliSeconds = Integer.parseInt(sTime) * 1000;
