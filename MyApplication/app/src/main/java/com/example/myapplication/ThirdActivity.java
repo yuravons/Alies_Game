@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.SeekBar;
@@ -14,6 +15,7 @@ public class ThirdActivity extends AppCompatActivity {
     private Button btn3;
     private SeekBar words_count, time;
     private TextView textView1, textView2;
+    private String sTeam1_Name, sTeam2_Name;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,6 +33,8 @@ public class ThirdActivity extends AppCompatActivity {
 
         time.setMin(10);
         time.setMax(120);
+        sTeam1_Name = getIntent().getStringExtra("TEAM_1");
+        sTeam2_Name = getIntent().getStringExtra("TEAM_2");
 
         words_count.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -73,12 +77,19 @@ public class ThirdActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         Intent int_btn2 = new Intent(ThirdActivity.this, Levels.class);
+                        sendTeamsNames(int_btn2);
                         startActivity(int_btn2);
-                        sendWordsCount();
-                        sendTime();
+                        //sendWordsCount();
+                        //sendTime();
                     }
                 }
         );
+    }
+    public void sendTeamsNames(Intent _intent) {
+        //Intent intent = new Intent(this, StartGame.class);
+        _intent.putExtra("TEAM_1", sTeam1_Name);
+        _intent.putExtra("TEAM_2", sTeam2_Name);
+        //startActivity(intent);
     }
     public void sendWordsCount() {
         Intent intent = new Intent(this, StartGame.class);

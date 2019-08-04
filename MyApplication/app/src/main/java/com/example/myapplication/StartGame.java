@@ -17,7 +17,6 @@ public class StartGame extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_game);
-        addListenerOnButton();
 
         Intent intent = getIntent();
 
@@ -29,11 +28,13 @@ public class StartGame extends AppCompatActivity {
         TextView j1 = (TextView)findViewById(R.id.textView10);
         j1.setText(name2);
 
-        String time = getIntent().getStringExtra("TIME");
+        //String time = getIntent().getStringExtra("TIME");
 
-        String words_count = getIntent().getStringExtra("WORDS_COUNT");
-        tvWordsCount = (TextView)findViewById(R.id.textView5);
-        tvWordsCount.setText(words_count);
+        //String words_count = getIntent().getStringExtra("WORDS_COUNT");
+        //tvWordsCount = (TextView)findViewById(R.id.textView5);
+        //tvWordsCount.setText(words_count);
+        //addListenerOnButton();
+
     }
 
     public void addListenerOnButton() {

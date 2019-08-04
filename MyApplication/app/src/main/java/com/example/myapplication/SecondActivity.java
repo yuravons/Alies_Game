@@ -27,23 +27,25 @@ public class SecondActivity extends AppCompatActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+
                         Intent int_btn2 = new Intent(SecondActivity.this, ThirdActivity.class);
+                        sendName(int_btn2);
                         startActivity(int_btn2);
-                        sendName();
+
                     }
                 }
         );
     }
 
 
-    public void sendName(){
+    public void sendName(Intent _intent){
 
         team_1 = (EditText)findViewById(R.id.editText3);
         team_2 = (EditText)findViewById(R.id.editText4);
 
-        Intent intent = new Intent(SecondActivity.this, StartGame.class);
-        intent.putExtra("TEAM_1",team_1.getText().toString());
-        intent.putExtra("TEAM_2",team_2.getText().toString());
-        startActivity(intent);
+        //Intent intent = new Intent(SecondActivity.this, StartGame.class);
+        _intent.putExtra("TEAM_1",team_1.getText().toString());
+        _intent.putExtra("TEAM_2",team_2.getText().toString());
+        //startActivity(intent);
     }
 }
