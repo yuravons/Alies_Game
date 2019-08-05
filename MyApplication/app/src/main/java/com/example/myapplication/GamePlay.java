@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -24,11 +25,14 @@ public class GamePlay extends AppCompatActivity {
     private CountDownTimer mCountDownTimer;
     private boolean mTimerRunning;
 
-    private ArrayList <Integer> arr = new ArrayList<Integer>();
-    private ArrayList <String> arrWords = new ArrayList<String>();
-    private ArrayList <Boolean> wordResult = new ArrayList<>();
+    private ArrayList<Integer> arr = new ArrayList<Integer>();
+    private ArrayList<String> arrWords = new ArrayList<String>();
+    private ArrayList<Boolean> wordResult = new ArrayList<>();
 
     private long mTimeLeftMilliSeconds;
+
+    private String count;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,16 +40,14 @@ public class GamePlay extends AppCompatActivity {
 
         sTime = getIntent().getStringExtra("TIME");
         mTimeLeftMilliSeconds = Integer.parseInt(sTime) * 1000;
-        tvTime  = (TextView)findViewById(R.id.textView21);
+        tvTime = (TextView) findViewById(R.id.textView21);
 
-        tvGuessedWord = (TextView)findViewById(R.id.textView17);
-        tvSkippedWord = (TextView)findViewById(R.id.textView20);
+        tvGuessedWord = (TextView) findViewById(R.id.textView17);
+        tvSkippedWord = (TextView) findViewById(R.id.textView20);
 
         btnStart = (Button) findViewById(R.id.button11);
         btnYes = (Button) findViewById(R.id.button9);
         btnNo = (Button) findViewById(R.id.button10);
-
-
 
 
         addListenerOnButton();
@@ -77,7 +79,7 @@ public class GamePlay extends AppCompatActivity {
                         nGuessedWords += 1;
                         tvGuessedWord.setText(String.valueOf(nGuessedWords));
                         wordResult.add(true);
-                        if(mTimerRunning) {
+                        if (mTimerRunning) {
                             setWord();
                         } else {
                             endGamePlay();
@@ -92,7 +94,7 @@ public class GamePlay extends AppCompatActivity {
                         nSkippedWords += 1;
                         tvSkippedWord.setText(String.valueOf(nSkippedWords));
                         wordResult.add(false);
-                        if(mTimerRunning) {
+                        if (mTimerRunning) {
                             setWord();
                         } else {
                             endGamePlay();
@@ -106,6 +108,7 @@ public class GamePlay extends AppCompatActivity {
         TextView tx = (TextView) findViewById(R.id.textView14);
         tx.setText(RandomWord());
     }
+
     private void startTimer() {
         mCountDownTimer = new CountDownTimer(mTimeLeftMilliSeconds, 1000) {
             @Override
@@ -139,6 +142,7 @@ public class GamePlay extends AppCompatActivity {
 
         tvTime.setText(timeLeftFormatted);
     }
+
     private String RandomWord() {
         Integer randNumber = 0;
 
@@ -170,15 +174,32 @@ public class GamePlay extends AppCompatActivity {
         _intent.putExtra("ARRAY_WORDS", arrWords);
 
         boolean arr[] = new boolean[wordResult.size()];
-        for (int i=0;i<wordResult.size();++i) {
+        for (int i = 0; i < wordResult.size(); ++i) {
             arr[i] = wordResult.get(i);
         }
         _intent.putExtra("WORDS_RESULTS", arr);
     }
 
     public void endGamePlay() {
-        Intent intent = new Intent(GamePlay.this,RoundResult.class);
+//        this.finish();
+        Intent intent = new Intent(this, RoundResult.class);
         sendArrayWords(intent);
-        startActivity(intent);
+        startActivityForResult(intent , 2);
+
+//        if(getIntent().getStringExtra("RESULT_POINTS") != null) {
+//            String count = getIntent().getStringExtra("RESULT_POINTS");
+//        }
+
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK && requestCode == 2) {
+            Intent resultIntent = new Intent();
+            resultIntent.putExtra( "RESULT_POINTS", data.getStringExtra("RESULT_POINTS"));
+            setResult(Activity.RESULT_OK, resultIntent);
+            finish();
+        }
     }
 }
