@@ -21,8 +21,9 @@ public class RoundResult extends AppCompatActivity {
     private boolean results [];
     private ListView lvAllWords;
     private Integer CountResult = 0;
-    private TextView tvCountResult;
+    private TextView tvCountResult, tvNamePlayingTeam;
     private Button btnEndRound;
+    private String playingTeam;
 
     ArrayAdapter<String> adapter;
 
@@ -33,10 +34,14 @@ public class RoundResult extends AppCompatActivity {
 
         resltList = getIntent().getStringArrayListExtra("ARRAY_WORDS");
         results = getIntent().getBooleanArrayExtra("WORDS_RESULTS");
+        playingTeam = getIntent().getStringExtra("PLAYING_TEAM");
 
         tvCountResult = (TextView)findViewById(R.id.textView24);
         lvAllWords = (ListView)findViewById(R.id.qwert);
         btnEndRound = (Button) findViewById(R.id.button12);
+        tvNamePlayingTeam = (TextView)findViewById(R.id.textView23);
+
+        tvNamePlayingTeam.setText(playingTeam);
 
          adapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_list_item_multiple_choice, resltList.toArray(new String[0]));

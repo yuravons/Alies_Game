@@ -19,8 +19,8 @@ public class GamePlay extends AppCompatActivity {
     private String sTeam1_Name, sTeam2_Name;
     private Integer nGuessedWords = 0, nSkippedWords = 0;
 
-    private String sTime;
-    private TextView tvTime, tvSkippedWord, tvGuessedWord;
+    private String sTime,playingTeam;
+    private TextView tvTime, tvSkippedWord, tvGuessedWord, tvPlayingTeam;
     private Button btnStart, btnYes, btnNo;
     private CountDownTimer mCountDownTimer;
     private boolean mTimerRunning;
@@ -38,12 +38,20 @@ public class GamePlay extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_play);
 
+        playingTeam = getIntent().getStringExtra("PLAYING_TEAM");
+
+
+
+
         sTime = getIntent().getStringExtra("TIME");
         mTimeLeftMilliSeconds = Integer.parseInt(sTime) * 1000;
         tvTime = (TextView) findViewById(R.id.textView21);
 
+        tvPlayingTeam = (TextView) findViewById(R.id.textView22);
         tvGuessedWord = (TextView) findViewById(R.id.textView17);
         tvSkippedWord = (TextView) findViewById(R.id.textView20);
+
+        tvPlayingTeam.setText(playingTeam);
 
         btnStart = (Button) findViewById(R.id.button11);
         btnYes = (Button) findViewById(R.id.button9);
@@ -57,6 +65,10 @@ public class GamePlay extends AppCompatActivity {
         setWord();
 
         startTimer();
+    }
+
+    public void sendplayingTeam(Intent _intent) {
+        _intent.putExtra("PLAYING_TEAM", playingTeam);
     }
 
     public void addListenerOnButton() {
@@ -184,6 +196,7 @@ public class GamePlay extends AppCompatActivity {
 //        this.finish();
         Intent intent = new Intent(this, RoundResult.class);
         sendArrayWords(intent);
+        sendplayingTeam(intent);
         startActivityForResult(intent , 2);
 
 //        if(getIntent().getStringExtra("RESULT_POINTS") != null) {

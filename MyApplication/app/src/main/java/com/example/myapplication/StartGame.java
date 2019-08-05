@@ -16,7 +16,7 @@ public class StartGame extends AppCompatActivity {
     private TextView tvWordsCount, tvTeam1_Name, tvTeam2_Name, tvCountTeam1, tvCountTeam2, tvGameRoundCount, TeamPlay;
     private String sTeam1_Name, sTeam2_Name;
     private String sCountWords, sTime;
-    private Integer CountTeam1 = 0, CountTeam2 = 0, GameCount = 0, RaundCount = 0;
+    private Integer CountTeam1 = 0, CountTeam2 = 0, GameCount = 1, RaundCount = 1;
     private Boolean boo = true;
     private String str;
     private String playingTeam;
@@ -33,6 +33,7 @@ public class StartGame extends AppCompatActivity {
         tvCountTeam2.setText(String.valueOf(CountTeam2));
         tvGameRoundCount = (TextView) findViewById(R.id.textView13);
         tvGameRoundCount.setText("Раунд " + String.valueOf(RaundCount) + " \\ Гра " + String.valueOf(GameCount));
+
 
         sTeam1_Name = getIntent().getStringExtra("TEAM_1");
         tvTeam1_Name = (TextView) findViewById(R.id.textView9);
@@ -64,6 +65,7 @@ public class StartGame extends AppCompatActivity {
                     public void onClick(View view) {
                         Intent int_btn1 = new Intent(StartGame.this, GamePlay.class);
                         sendTime(int_btn1);
+                        sendplayingTeam(int_btn1);
                         startActivityForResult(int_btn1, 2);
 
                     }
@@ -79,17 +81,28 @@ public class StartGame extends AppCompatActivity {
                 CountTeam1 += Integer.valueOf(data.getStringExtra("RESULT_POINTS"));
                 tvCountTeam1.setText(CountTeam1.toString());
                 playingTeam = sTeam2_Name;
+                RaundCount += 1;
             } else if (playingTeam.equals(sTeam2_Name)) {
                 CountTeam2 += Integer.valueOf(data.getStringExtra("RESULT_POINTS"));
                 tvCountTeam2.setText(CountTeam2.toString());
                 playingTeam = sTeam1_Name;
+                GameCount += 1;
+                RaundCount -= 1;
             }
 
             TeamPlay.setText(playingTeam);
+            tvGameRoundCount.setText("Раунд " + String.valueOf(RaundCount) + " \\ Гра " + String.valueOf(GameCount));
         }
     }
 
     public void sendTime(Intent _intent) {
         _intent.putExtra("TIME", sTime);
+    }
+    public void sendplayingTeam(Intent _intent) {
+        _intent.putExtra("PLAYING_TEAM", playingTeam);
+    }
+
+    public void WhoWiner (){
+
     }
 }
