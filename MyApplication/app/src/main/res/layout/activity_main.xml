@@ -9,26 +9,29 @@
 
     <Button
         android:id="@+id/button"
-        android:layout_width="123dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="277dp"
-        android:layout_marginBottom="8dp"
-        android:text="Грати"
+        android:layout_width="186dp"
+        android:layout_height="59dp"
+        android:layout_marginTop="270dp"
+        android:layout_marginBottom="22dp"
         android:background="@color/colorPrimary"
+        android:text="Грати"
         app:layout_constraintBottom_toTopOf="@+id/button2"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/button2"
-        android:layout_width="123dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="338dp"
-        android:text="Правила"
+        android:layout_width="186dp"
+        android:layout_height="59dp"
+        android:layout_marginTop="22dp"
+        android:layout_marginBottom="270dp"
         android:background="@color/colorPrimary"
+        android:text="Правила"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button" />
 </androidx.constraintlayout.widget.ConstraintLayout>
