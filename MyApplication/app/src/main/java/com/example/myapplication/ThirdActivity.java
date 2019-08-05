@@ -93,6 +93,10 @@ public class ThirdActivity extends AppCompatActivity {
         _intent.putExtra("WORDS_COUNT", textView1.getText().toString());
     }
     public void sendTime(Intent _intent) {
-        _intent.putExtra("TIME", textView2.getText().toString());
+        if (textView2.getText().equals("")) {
+            _intent.putExtra("TIME", "10");
+        } else {
+            _intent.putExtra("TIME", textView2.getText().toString());
+        }
     }
 }
