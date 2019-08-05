@@ -3,9 +3,12 @@ package com.example.myapplication;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.AdapterView;
 import android.widget.TextView;
@@ -19,6 +22,7 @@ public class RoundResult extends AppCompatActivity {
     private ListView lvAllWords;
     private Integer CountResult = 0;
     private TextView tvCountResult;
+    private Button btnEndRound;
 
     ArrayAdapter<String> adapter;
 
@@ -32,14 +36,17 @@ public class RoundResult extends AppCompatActivity {
 
         tvCountResult = (TextView)findViewById(R.id.textView24);
         lvAllWords = (ListView)findViewById(R.id.qwert);
+        btnEndRound = (Button) findViewById(R.id.button12);
 
          adapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_list_item_multiple_choice, resltList.toArray(new String[0]));
         lvAllWords.setAdapter(adapter);
 
+        addListenerOnButton();
+
         int j=0;
         for (String str : resltList) {
-            if (results[j] == true){
+            if (results[j]){
                 lvAllWords.setItemChecked(j,true);
                 CountResult +=1;
             }
@@ -54,7 +61,7 @@ public class RoundResult extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View v, int position, long id)
             {
-                if (lvAllWords.isItemChecked(position)==true){
+                if (lvAllWords.isItemChecked(position)){
                     CountResult +=1;
                 }
                 else {
@@ -64,5 +71,26 @@ public class RoundResult extends AppCompatActivity {
             }
         });
         tvCountResult.setText(String.valueOf(CountResult));
+    }
+
+    public void addListenerOnButton() {
+        btnEndRound.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        btnEndRound();
+                    }
+                }
+        );
+    }
+
+    public void btnEndRound() {
+        Intent resultIntent = new Intent();
+        resultIntent.putExtra( "RESULT_POINTS", CountResult.toString());
+        setResult(Activity.RESULT_OK, resultIntent);
+        finish();
+//        Intent intent = new Intent(GamePlay.this,RoundResult.class);
+//        sendArrayWords(intent);
+//        startActivity(intent);
     }
 }
