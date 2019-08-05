@@ -1,22 +1,17 @@
 package com.example.myapplication;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.util.Log;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Random;
-
-import java.sql.Time;
 import java.util.Locale;
-import java.util.Timer;
+import java.util.Random;
 
 public class GamePlay extends AppCompatActivity {
 
@@ -25,7 +20,7 @@ public class GamePlay extends AppCompatActivity {
 
     private String sTime;
     private TextView tvTime, tvSkippedWord, tvGuessedWord;
-    private Button btnStart, btnYes, btnNo,btnEnd;
+    private Button btnStart, btnYes, btnNo;
     private CountDownTimer mCountDownTimer;
     private boolean mTimerRunning;
 
@@ -49,12 +44,17 @@ public class GamePlay extends AppCompatActivity {
         btnStart = (Button) findViewById(R.id.button11);
         btnYes = (Button) findViewById(R.id.button9);
         btnNo = (Button) findViewById(R.id.button10);
-        btnEnd = (Button) findViewById(R.id.button13);
+
+
 
 
         addListenerOnButton();
 
         updateCountDownText();
+
+        setWord();
+
+        startTimer();
     }
 
     public void addListenerOnButton() {
@@ -62,7 +62,6 @@ public class GamePlay extends AppCompatActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        setWord();
                         if (mTimerRunning) {
                             pauseTimer();
                         } else {
@@ -78,7 +77,11 @@ public class GamePlay extends AppCompatActivity {
                         nGuessedWords += 1;
                         tvGuessedWord.setText(String.valueOf(nGuessedWords));
                         wordResult.add(true);
-                        setWord();
+                        if(mTimerRunning) {
+                            setWord();
+                        } else {
+                            endGamePlay();
+                        }
                     }
                 }
         );
@@ -89,17 +92,11 @@ public class GamePlay extends AppCompatActivity {
                         nSkippedWords += 1;
                         tvSkippedWord.setText(String.valueOf(nSkippedWords));
                         wordResult.add(false);
-                        setWord();
-                    }
-                }
-        );
-        btnEnd.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                       Intent intent = new Intent(GamePlay.this,RoundResult.class);
-                       sendArrayWords(intent);
-                       startActivity(intent);
+                        if(mTimerRunning) {
+                            setWord();
+                        } else {
+                            endGamePlay();
+                        }
                     }
                 }
         );
@@ -120,19 +117,18 @@ public class GamePlay extends AppCompatActivity {
             @Override
             public void onFinish() {
                 mTimerRunning = false;
-                btnStart.setText("Start");
                 btnStart.setVisibility(View.INVISIBLE);
             }
         }.start();
 
         mTimerRunning = true;
-        btnStart.setText("pause");
+        btnStart.setText("Пауза");
     }
 
     private void pauseTimer() {
         mCountDownTimer.cancel();
         mTimerRunning = false;
-        btnStart.setText("Start");
+        btnStart.setText("Продовжити");
     }
 
     private void updateCountDownText() {
@@ -180,4 +176,9 @@ public class GamePlay extends AppCompatActivity {
         _intent.putExtra("WORDS_RESULTS", arr);
     }
 
+    public void endGamePlay() {
+        Intent intent = new Intent(GamePlay.this,RoundResult.class);
+        sendArrayWords(intent);
+        startActivity(intent);
+    }
 }

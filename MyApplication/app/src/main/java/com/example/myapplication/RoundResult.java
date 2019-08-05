@@ -39,7 +39,7 @@ public class RoundResult extends AppCompatActivity {
 
         int j=0;
         for (String str : resltList) {
-            if (results[j] == true){
+            if (results[j]){
                 lvAllWords.setItemChecked(j,true);
                 CountResult +=1;
             }
@@ -54,7 +54,7 @@ public class RoundResult extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View v, int position, long id)
             {
-                if (lvAllWords.isItemChecked(position)==true){
+                if (lvAllWords.isItemChecked(position)){
                     CountResult +=1;
                 }
                 else {
