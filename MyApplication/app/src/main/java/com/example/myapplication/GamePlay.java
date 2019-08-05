@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
 
 import java.sql.Time;
@@ -24,11 +25,14 @@ public class GamePlay extends AppCompatActivity {
 
     private String sTime;
     private TextView tvTime, tvSkippedWord, tvGuessedWord;
-    private Button btnStart, btnYes, btnNo;
+    private Button btnStart, btnYes, btnNo,btnEnd;
     private CountDownTimer mCountDownTimer;
     private boolean mTimerRunning;
 
     private ArrayList <Integer> arr = new ArrayList<Integer>();
+    private ArrayList <String> arrWords = new ArrayList<String>();
+    private ArrayList <Boolean> wordResult = new ArrayList<>();
+
     private long mTimeLeftMilliSeconds;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +49,8 @@ public class GamePlay extends AppCompatActivity {
         btnStart = (Button) findViewById(R.id.button11);
         btnYes = (Button) findViewById(R.id.button9);
         btnNo = (Button) findViewById(R.id.button10);
+        btnEnd = (Button) findViewById(R.id.button13);
+
 
         addListenerOnButton();
 
@@ -71,6 +77,7 @@ public class GamePlay extends AppCompatActivity {
                     public void onClick(View view) {
                         nGuessedWords += 1;
                         tvGuessedWord.setText(String.valueOf(nGuessedWords));
+                        wordResult.add(true);
                         setWord();
                     }
                 }
@@ -81,7 +88,18 @@ public class GamePlay extends AppCompatActivity {
                     public void onClick(View view) {
                         nSkippedWords += 1;
                         tvSkippedWord.setText(String.valueOf(nSkippedWords));
+                        wordResult.add(false);
                         setWord();
+                    }
+                }
+        );
+        btnEnd.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                       Intent intent = new Intent(GamePlay.this,RoundResult.class);
+                       sendArrayWords(intent);
+                       startActivity(intent);
                     }
                 }
         );
@@ -148,6 +166,18 @@ public class GamePlay extends AppCompatActivity {
         } while (++i < arr.size());
         arr.add(randNumber);
         String sWord = easy_word.getWord(randNumber);
+        arrWords.add(sWord);
         return sWord;
     }
+
+    public void sendArrayWords(Intent _intent) {
+        _intent.putExtra("ARRAY_WORDS", arrWords);
+
+        boolean arr[] = new boolean[wordResult.size()];
+        for (int i=0;i<wordResult.size();++i) {
+            arr[i] = wordResult.get(i);
+        }
+        _intent.putExtra("WORDS_RESULTS", arr);
+    }
+
 }
