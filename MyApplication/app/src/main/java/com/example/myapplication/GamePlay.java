@@ -11,14 +11,16 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Random;
 
 public class GamePlay extends AppCompatActivity {
 
     private String sTeam1_Name, sTeam2_Name;
     private Integer nGuessedWords = 0, nSkippedWords = 0;
-
+    private Map<String, Boolean> gameLevels = new HashMap<String, Boolean>();
     private String sTime,playingTeam;
     private TextView tvTime, tvSkippedWord, tvGuessedWord, tvPlayingTeam;
     private Button btnStart, btnYes, btnNo;
@@ -40,8 +42,9 @@ public class GamePlay extends AppCompatActivity {
 
         playingTeam = getIntent().getStringExtra("PLAYING_TEAM");
 
-
-
+        gameLevels.put("Easy", false);
+        gameLevels.put("Medium", false);
+        gameLevels.put("Hard", false);
 
         sTime = getIntent().getStringExtra("TIME");
         mTimeLeftMilliSeconds = Integer.parseInt(sTime) * 1000;
@@ -56,7 +59,6 @@ public class GamePlay extends AppCompatActivity {
         btnStart = (Button) findViewById(R.id.button11);
         btnYes = (Button) findViewById(R.id.button9);
         btnNo = (Button) findViewById(R.id.button10);
-
 
         addListenerOnButton();
 
@@ -157,17 +159,29 @@ public class GamePlay extends AppCompatActivity {
     }
 
     private String RandomWord() {
+        Integer nRangeSize = 0;
         Integer randNumber = 0;
 
         arr.add(1);
         Boolean isFlag = false;
-        EasyWord easy_word = new EasyWord();
+
+        EasyWord easy_words = new EasyWord();
+        MediumWord medium_words = new MediumWord();
+        HardWord hard_words = new HardWord();
+
+        if(gameLevels.get("Easy")) {
+            nRangeSize = easy_words.getSize();
+        } else if (gameLevels.get("Medium")) {
+            nRangeSize = medium_words.getSize();
+        } else if (gameLevels.get("Hard")) {
+            nRangeSize = hard_words.getSize();
+        }
 
         int i = 0;
         Boolean isGenerate = true;
         do {
             if (isGenerate)
-                randNumber = new Random().nextInt(50);
+                randNumber = new Random().nextInt(nRangeSize);
             if (randNumber != arr.get(i)) {
                 isFlag = true;
                 isGenerate = false;
@@ -178,7 +192,7 @@ public class GamePlay extends AppCompatActivity {
             }
         } while (++i < arr.size());
         arr.add(randNumber);
-        String sWord = easy_word.getWord(randNumber);
+        String sWord = easy_words.getWord(randNumber);
         arrWords.add(sWord);
         return sWord;
     }

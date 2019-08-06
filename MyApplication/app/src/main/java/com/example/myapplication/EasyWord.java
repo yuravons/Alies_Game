@@ -12,4 +12,8 @@ public class EasyWord {
     public String getWord(Integer i){
         return easy_word[i];
     }
+
+    public int getSize() {
+        return easy_word.length;
+    }
 }
