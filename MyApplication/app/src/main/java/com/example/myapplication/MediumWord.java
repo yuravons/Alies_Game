@@ -9,6 +9,10 @@ public class MediumWord {
             "вирішити", "вітер", "товариш", "відчувати", "дід", "вогонь", "мати", "починати", "кинути", "читати", "хвиля", "повітря",
             "вірити", "тримати", "козак", "ворог"};
 
+    public String getWord(Integer i){
+        return medium_word[i];
+    }
+
     public int getSize() {
         return medium_word.length;
     }

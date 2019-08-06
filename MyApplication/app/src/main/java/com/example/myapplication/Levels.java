@@ -27,10 +27,11 @@ public class Levels extends AppCompatActivity {
     }
     
     public void addListenerOnButton() {
-        btn0 = (Button) findViewById(R.id.button5);
-        btn01 = (Button) findViewById(R.id.button6);
-        btn02 = (Button) findViewById(R.id.button7);
+        btn0 = (Button) findViewById(R.id.button5); //Hard level
+        btn01 = (Button) findViewById(R.id.button6); //Easy level
+        btn02 = (Button) findViewById(R.id.button7); //Medium level
 
+        //Hard level
         btn0.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -39,12 +40,14 @@ public class Levels extends AppCompatActivity {
                         sendTeamsNames(int_btn1);
                         sendWordsCount(int_btn1);
                         sendTime(int_btn1);
+                        sendTypeLevel(int_btn1, "Hard");
                         startActivity(int_btn1);
                     }
                 }
 
         );
 
+        //Easy level
         btn01.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -53,12 +56,14 @@ public class Levels extends AppCompatActivity {
                         sendTeamsNames(int_btn1);
                         sendWordsCount(int_btn1);
                         sendTime(int_btn1);
+                        sendTypeLevel(int_btn1, "Easy");
                         startActivity(int_btn1);
                     }
                 }
 
         );
 
+        //Medium level
         btn02.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -67,6 +72,7 @@ public class Levels extends AppCompatActivity {
                         sendTeamsNames(int_btn1);
                         sendWordsCount(int_btn1);
                         sendTime(int_btn1);
+                        sendTypeLevel(int_btn1, "Medium");
                         startActivity(int_btn1);
                     }
                 }
@@ -86,4 +92,7 @@ public class Levels extends AppCompatActivity {
         _intent.putExtra("TIME", sTime);
     }
 
+    public void sendTypeLevel(Intent _intent, String _type) {
+        _intent.putExtra("LEVEL", _type);
+    }
 }

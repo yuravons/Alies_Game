@@ -20,6 +20,7 @@ public class StartGame extends AppCompatActivity {
     private Boolean boo = true;
     private String str;
     private String playingTeam;
+    private String sLevelType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +35,7 @@ public class StartGame extends AppCompatActivity {
         tvGameRoundCount = (TextView) findViewById(R.id.textView13);
         tvGameRoundCount.setText("Раунд " + String.valueOf(RaundCount) + " \\ Гра " + String.valueOf(GameCount));
 
+        sLevelType = getIntent().getStringExtra("LEVEL");
 
         sTeam1_Name = getIntent().getStringExtra("TEAM_1");
         tvTeam1_Name = (TextView) findViewById(R.id.textView9);
@@ -66,6 +68,7 @@ public class StartGame extends AppCompatActivity {
                         Intent int_btn1 = new Intent(StartGame.this, GamePlay.class);
                         sendTime(int_btn1);
                         sendplayingTeam(int_btn1);
+                        sendTypeLevel(int_btn1);
                         startActivityForResult(int_btn1, 2);
 
                     }
@@ -101,6 +104,10 @@ public class StartGame extends AppCompatActivity {
     }
     public void sendplayingTeam(Intent _intent) {
         _intent.putExtra("PLAYING_TEAM", playingTeam);
+    }
+
+    public void sendTypeLevel(Intent _intent) {
+        _intent.putExtra("LEVEL", sLevelType);
     }
 
     public void WhoWiner (){
