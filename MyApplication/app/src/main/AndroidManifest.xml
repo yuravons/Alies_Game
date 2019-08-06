@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".RoundResult"></activity>
+        <activity android:name=".congratulations_winner"></activity>
+        <activity android:name=".RoundResult" />
         <activity android:name=".GamePlay" />
         <activity android:name=".StartGame" />
         <activity android:name=".Levels" />

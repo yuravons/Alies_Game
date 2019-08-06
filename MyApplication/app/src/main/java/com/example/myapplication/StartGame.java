@@ -92,6 +92,7 @@ public class StartGame extends AppCompatActivity {
 
             TeamPlay.setText(playingTeam);
             tvGameRoundCount.setText("Раунд " + String.valueOf(RaundCount) + " \\ Гра " + String.valueOf(GameCount));
+            WhoWiner();
         }
     }
 
@@ -103,6 +104,21 @@ public class StartGame extends AppCompatActivity {
     }
 
     public void WhoWiner (){
-
+        if(RaundCount == 1){
+            if (CountTeam1 >= Integer.parseInt(sCountWords) || CountTeam2 >= Integer.parseInt(sCountWords)){
+                if (CountTeam1 > CountTeam2){
+                    Intent int_btn2 = new Intent(StartGame.this, congratulations_winner.class);
+                    int_btn2.putExtra("WINNER_TEAM", sTeam1_Name);
+                    int_btn2.putExtra("WINNER_RESULT", CountTeam1.toString());
+                    startActivity(int_btn2);
+                }
+                else {
+                    Intent int_btn2 = new Intent(StartGame.this, congratulations_winner.class);
+                    int_btn2.putExtra("WINNER_TEAM", sTeam2_Name);
+                    int_btn2.putExtra("WINNER_RESULT", CountTeam2.toString());
+                    startActivity(int_btn2);
+                }
+            }
+        }
     }
 }
