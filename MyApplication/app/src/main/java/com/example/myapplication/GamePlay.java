@@ -132,6 +132,7 @@ public class GamePlay extends AppCompatActivity {
             @Override
             public void onFinish() {
                 mTimerRunning = false;
+                tvTime.setText("Останнє слово");
                 btnStart.setVisibility(View.INVISIBLE);
             }
         }.start();
