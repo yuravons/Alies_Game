@@ -1,6 +1,6 @@
-package com.example.myapplication;
+package com.example.myapplication.words;
 
-public class HardWord {
+public class HardWord implements Word {
     private String [] hard_word = {"додому", "дорога", "сісти", "військо", "крок", "темний", "вечір", "змогти",
             "єдиний", "Микола", "будинок", "дружина", "малий", "частина", "дитина", "спати", "сльоза", "показати",
             "важко", "питати", "пам'ятати", "чужий", "церква", "страшний", "поїхати", "залишитися", "школа", "досі",
@@ -9,10 +9,12 @@ public class HardWord {
             "далекий", "лице", "Андрій", "тобто", "ой", "рідний", "ані", "сон", "можливо", "хліб", "відразу", "невже",
             "рух", "деякий", "держава", "мовчки", "корабель", "поставити", "промовити", "гора", "старший", "крзавтра", "відповідь"};
 
+    @Override
     public String getWord(Integer i){
         return hard_word[i];
     }
 
+    @Override
     public int getSize() {
         return hard_word.length;
     }

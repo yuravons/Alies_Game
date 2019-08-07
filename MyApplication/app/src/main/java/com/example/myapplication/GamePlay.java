@@ -10,10 +10,13 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.myapplication.words.EasyWord;
+import com.example.myapplication.words.HardWord;
+import com.example.myapplication.words.MediumWord;
+import com.example.myapplication.words.Word;
+
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Locale;
-import java.util.Map;
 import java.util.Random;
 
 public class GamePlay extends AppCompatActivity {
@@ -21,18 +24,16 @@ public class GamePlay extends AppCompatActivity {
     private String sTeam1_Name, sTeam2_Name;
     private Integer nGuessedWords = 0, nSkippedWords = 0;
     private String sTime, playingTeam;
-    private TextView tvTime, tvSkippedWord, tvGuessedWord, tvPlayingTeam;
-    private Button btnStart, btnYes, btnNo;
+    private TextView tvTime, tvSkippedWord, tvGuessedWord, tvPlayingTeam, tvWord;
+    private Button btnPause, btnYes, btnNo;
     private CountDownTimer mCountDownTimer;
     private boolean mTimerRunning;
 
-    private ArrayList<Integer> arr = new ArrayList<Integer>();
+    private static ArrayList<Integer> arr = new ArrayList<>();
     private ArrayList<String> arrWords = new ArrayList<String>();
     private ArrayList<Boolean> wordResult = new ArrayList<>();
 
     private long mTimeLeftMilliSeconds;
-
-    private String count;
 
     private String sLevelType;
 
@@ -55,17 +56,20 @@ public class GamePlay extends AppCompatActivity {
 
         tvPlayingTeam.setText(playingTeam);
 
-        btnStart = (Button) findViewById(R.id.button11);
+        btnPause = (Button) findViewById(R.id.button11);
         btnYes = (Button) findViewById(R.id.button9);
         btnNo = (Button) findViewById(R.id.button10);
+        tvWord = (TextView) findViewById(R.id.textView14);
+
+        btnYes.setEnabled(false);
+        btnNo.setEnabled(false);
+        btnPause.setEnabled(false);
 
         addListenerOnButton();
 
         updateCountDownText();
 
-        setWord();
-
-        startTimer();
+        tvWord.setText("Почати");
     }
 
     public void sendplayingTeam(Intent _intent) {
@@ -73,7 +77,21 @@ public class GamePlay extends AppCompatActivity {
     }
 
     public void addListenerOnButton() {
-        btnStart.setOnClickListener(
+
+        tvWord.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        setWord();
+                        btnYes.setEnabled(true);
+                        btnNo.setEnabled(true);
+                        btnPause.setEnabled(true);
+                        startTimer();
+                    }
+                }
+        );
+
+        btnPause.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -85,6 +103,7 @@ public class GamePlay extends AppCompatActivity {
                     }
                 }
         );
+
         btnYes.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -134,18 +153,18 @@ public class GamePlay extends AppCompatActivity {
             public void onFinish() {
                 mTimerRunning = false;
                 tvTime.setText("Останнє слово");
-                btnStart.setVisibility(View.INVISIBLE);
+                btnPause.setVisibility(View.INVISIBLE);
             }
         }.start();
 
         mTimerRunning = true;
-        btnStart.setText("Пауза");
+        btnPause.setText("Пауза");
     }
 
     private void pauseTimer() {
         mCountDownTimer.cancel();
         mTimerRunning = false;
-        btnStart.setText("Продовжити");
+        btnPause.setText("Продовжити");
     }
 
     private void updateCountDownText() {
@@ -158,26 +177,27 @@ public class GamePlay extends AppCompatActivity {
     }
 
     private String RandomWord() {
-        Integer nRangeSize = 0;
-        Integer randNumber = 0;
+        int nRangeSize = 0;
+        int randNumber = 0;
 
         arr.add(1);
-        Boolean isFlag = false;
+        boolean isFlag = false;
 
-        EasyWord easy_words = new EasyWord();
-        MediumWord medium_words = new MediumWord();
-        HardWord hard_words = new HardWord();
+        Word words;
 
-        if(sLevelType == "Easy") {
-            nRangeSize = easy_words.getSize();
-        } else if (sLevelType == "Medium") {
-            nRangeSize = medium_words.getSize();
-        } else if (sLevelType == "Hard") {
-            nRangeSize = hard_words.getSize();
+        if (sLevelType.equals("Easy")) {
+            words = new EasyWord();
+        } else if (sLevelType.equals("Medium")) {
+            words = new MediumWord();
+        } else {
+            //LEVEL equals Hard
+            words = new HardWord();
         }
 
+        nRangeSize = words.getSize();
+
         int i = 0;
-        Boolean isGenerate = true;
+        boolean isGenerate = true;
         do {
             if (isGenerate)
                 randNumber = new Random().nextInt(nRangeSize);
@@ -192,14 +212,9 @@ public class GamePlay extends AppCompatActivity {
         } while (++i < arr.size());
         arr.add(randNumber);
 
-        String sWord = "";
-        if(sLevelType == "Easy") {
-            sWord = easy_words.getWord(randNumber);
-        } else if (sLevelType == "Medium") {
-            sWord = medium_words.getWord(randNumber);
-        } else if (sLevelType == "Hard") {
-            sWord = hard_words.getWord(randNumber);
-        }
+        String sWord;
+
+        sWord = words.getWord(randNumber);
 
         arrWords.add(sWord);
         return sWord;
@@ -208,7 +223,7 @@ public class GamePlay extends AppCompatActivity {
     public void sendArrayWords(Intent _intent) {
         _intent.putExtra("ARRAY_WORDS", arrWords);
 
-        boolean arr[] = new boolean[wordResult.size()];
+        boolean[] arr = new boolean[wordResult.size()];
         for (int i = 0; i < wordResult.size(); ++i) {
             arr[i] = wordResult.get(i);
         }
@@ -216,16 +231,10 @@ public class GamePlay extends AppCompatActivity {
     }
 
     public void endGamePlay() {
-//        this.finish();
         Intent intent = new Intent(this, RoundResult.class);
         sendArrayWords(intent);
         sendplayingTeam(intent);
-        startActivityForResult(intent , 2);
-
-//        if(getIntent().getStringExtra("RESULT_POINTS") != null) {
-//            String count = getIntent().getStringExtra("RESULT_POINTS");
-//        }
-
+        startActivityForResult(intent, 2);
     }
 
     @Override
@@ -233,7 +242,7 @@ public class GamePlay extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK && requestCode == 2) {
             Intent resultIntent = new Intent();
-            resultIntent.putExtra( "RESULT_POINTS", data.getStringExtra("RESULT_POINTS"));
+            resultIntent.putExtra("RESULT_POINTS", data.getStringExtra("RESULT_POINTS"));
             setResult(Activity.RESULT_OK, resultIntent);
             finish();
         }

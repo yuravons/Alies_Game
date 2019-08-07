@@ -1,18 +1,18 @@
-package com.example.myapplication;
+package com.example.myapplication.words;
 
-import java.util.Random;
-
-public class EasyWord {
+public class EasyWord implements Word {
     private String [] easy_word = {"рука", "око", "голова", "слово", "земля", "життя", "день", "старий", "жінка", "нога",
             "ось", "сила", "людина", "місце", "новий", "рік", "чоловік", "обличчя", "голос", "двері", "думка",
             "батько", "серце", "бік", "україна", "бог", "дати", "ніколи", "хлопець", "розуміти", "пан", "ніч",
             "правда", "вода", "давати", "останній", "погляд", "ніхто", "дівчина", "сонце", "стіл", "небо", "тіло",
             "любити", "відповісти", "річ", "народ", "місто", "плече", "чекати", "знайти", "жити", "вікно", "син", "спитати", "смерть"};
 
+    @Override
     public String getWord(Integer i){
         return easy_word[i];
     }
 
+    @Override
     public int getSize() {
         return easy_word.length;
     }

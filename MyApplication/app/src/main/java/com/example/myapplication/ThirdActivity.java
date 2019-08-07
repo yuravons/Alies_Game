@@ -16,6 +16,10 @@ public class ThirdActivity extends AppCompatActivity {
     private SeekBar words_count, time;
     private TextView textView1, textView2;
     private String sTeam1_Name, sTeam2_Name;
+
+    private static final Integer DEFAULT_WORDS_COUNT = 10;
+    private static final Integer DEFAULT_TIME = 10;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,11 +94,16 @@ public class ThirdActivity extends AppCompatActivity {
         _intent.putExtra("TEAM_2", sTeam2_Name);
     }
     public void sendWordsCount(Intent _intent) {
-        _intent.putExtra("WORDS_COUNT", textView1.getText().toString());
+        if (textView1.getText().equals("")) {
+            _intent.putExtra("WORDS_COUNT", DEFAULT_WORDS_COUNT.toString());
+        } else {
+            _intent.putExtra("WORDS_COUNT", textView1.getText().toString());
+        }
     }
+
     public void sendTime(Intent _intent) {
         if (textView2.getText().equals("")) {
-            _intent.putExtra("TIME", "10");
+            _intent.putExtra("TIME", DEFAULT_TIME.toString());
         } else {
             _intent.putExtra("TIME", textView2.getText().toString());
         }

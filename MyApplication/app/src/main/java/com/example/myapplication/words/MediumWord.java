@@ -1,6 +1,6 @@
-package com.example.myapplication;
+package com.example.myapplication.words;
 
-public class MediumWord {
+public class MediumWord implements Word {
     private String [] medium_word = {"лежати", "мусити", "слухати", "стіна", "повернутися", "взяти", "хвилина", "іти",
             "боятися", "сьогодні", "мама", "ніж", "кінь", "зрозуміти", "довго", "колись", "молодий", "мало", "виходити", "запитати",
             "високий", "кімната", "справа", "мова", "село", "просити", "власний", "білий", "шукати", "князь", "Іван", "довгий",
@@ -9,10 +9,12 @@ public class MediumWord {
             "вирішити", "вітер", "товариш", "відчувати", "дід", "вогонь", "мати", "починати", "кинути", "читати", "хвиля", "повітря",
             "вірити", "тримати", "козак", "ворог"};
 
+    @Override
     public String getWord(Integer i){
         return medium_word[i];
     }
 
+    @Override
     public int getSize() {
         return medium_word.length;
     }
