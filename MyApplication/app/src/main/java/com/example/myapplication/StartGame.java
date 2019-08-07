@@ -69,6 +69,8 @@ public class StartGame extends AppCompatActivity {
                         sendTime(int_btn1);
                         sendplayingTeam(int_btn1);
                         sendTypeLevel(int_btn1);
+                        sendIsPenalty(int_btn1);
+                        sendIsCommonLastWord(int_btn1);
                         startActivityForResult(int_btn1, 2);
 
                     }
@@ -108,6 +110,14 @@ public class StartGame extends AppCompatActivity {
 
     public void sendTypeLevel(Intent _intent) {
         _intent.putExtra("LEVEL", sLevelType);
+    }
+
+    public void sendIsPenalty(Intent _intent) {
+        _intent.putExtra("PENALTY", getIntent().getBooleanExtra("PENALTY", false));
+    }
+
+    public void sendIsCommonLastWord(Intent _intent) {
+        _intent.putExtra("COMMON_LAST_WORD", getIntent().getBooleanExtra("COMMON_LAST_WORD", false));
     }
 
     public void WhoWiner (){
