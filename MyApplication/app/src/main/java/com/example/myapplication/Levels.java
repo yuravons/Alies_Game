@@ -40,6 +40,8 @@ public class Levels extends AppCompatActivity {
                         sendTeamsNames(int_btn1);
                         sendWordsCount(int_btn1);
                         sendTime(int_btn1);
+                        sendIsPenalty(int_btn1);
+                        sendIsCommonLastWord(int_btn1);
                         sendTypeLevel(int_btn1, "Hard");
                         startActivity(int_btn1);
                     }
@@ -56,6 +58,8 @@ public class Levels extends AppCompatActivity {
                         sendTeamsNames(int_btn1);
                         sendWordsCount(int_btn1);
                         sendTime(int_btn1);
+                        sendIsPenalty(int_btn1);
+                        sendIsCommonLastWord(int_btn1);
                         sendTypeLevel(int_btn1, "Easy");
                         startActivity(int_btn1);
                     }
@@ -72,6 +76,8 @@ public class Levels extends AppCompatActivity {
                         sendTeamsNames(int_btn1);
                         sendWordsCount(int_btn1);
                         sendTime(int_btn1);
+                        sendIsPenalty(int_btn1);
+                        sendIsCommonLastWord(int_btn1);
                         sendTypeLevel(int_btn1, "Medium");
                         startActivity(int_btn1);
                     }
@@ -94,5 +100,14 @@ public class Levels extends AppCompatActivity {
 
     public void sendTypeLevel(Intent _intent, String _type) {
         _intent.putExtra("LEVEL", _type);
+    }
+
+    public void sendIsPenalty(Intent _intent) {
+        Boolean temp = getIntent().getBooleanExtra("PENALTY", false);
+        _intent.putExtra("PENALTY", getIntent().getBooleanExtra("PENALTY", false));
+    }
+
+    public void sendIsCommonLastWord(Intent _intent) {
+        _intent.putExtra("COMMON_LAST_WORD", getIntent().getBooleanExtra("COMMON_LAST_WORD", false));
     }
 }

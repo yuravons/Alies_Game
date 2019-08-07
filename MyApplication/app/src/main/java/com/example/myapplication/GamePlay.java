@@ -47,6 +47,7 @@ public class GamePlay extends AppCompatActivity {
         sLevelType = getIntent().getStringExtra("LEVEL");
 
         sTime = getIntent().getStringExtra("TIME");
+
         mTimeLeftMilliSeconds = Integer.parseInt(sTime) * 1000;
         tvTime = (TextView) findViewById(R.id.textView21);
 
@@ -234,7 +235,17 @@ public class GamePlay extends AppCompatActivity {
         Intent intent = new Intent(this, RoundResult.class);
         sendArrayWords(intent);
         sendplayingTeam(intent);
+        sendIsPenalty(intent);
+        sendIsCommonLastWord(intent);
         startActivityForResult(intent, 2);
+    }
+
+    public void sendIsPenalty(Intent _intent) {
+        _intent.putExtra("PENALTY", getIntent().getBooleanExtra("PENALTY", false));
+    }
+
+    public void sendIsCommonLastWord(Intent _intent) {
+        _intent.putExtra("COMMON_LAST_WORD", getIntent().getBooleanExtra("COMMON_LAST_WORD", false));
     }
 
     @Override

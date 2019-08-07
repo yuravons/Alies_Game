@@ -7,7 +7,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.SeekBar;
+import android.widget.Switch;
 import android.widget.TextView;
 
 public class ThirdActivity extends AppCompatActivity {
@@ -16,6 +18,8 @@ public class ThirdActivity extends AppCompatActivity {
     private SeekBar words_count, time;
     private TextView textView1, textView2;
     private String sTeam1_Name, sTeam2_Name;
+    private Switch swPenalty, swCommonLastWord;
+    private Boolean isPenalty, isCommonLastWord;
 
     private static final Integer DEFAULT_WORDS_COUNT = 10;
     private static final Integer DEFAULT_TIME = 10;
@@ -24,7 +28,7 @@ public class ThirdActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_third);
-        addListenerOnButton2();
+        addListeners();
 
         textView1 = (TextView) findViewById(R.id.textView7);
         textView2 = (TextView) findViewById(R.id.textView8);
@@ -74,8 +78,11 @@ public class ThirdActivity extends AppCompatActivity {
         });
     }
 
-    public void addListenerOnButton2() {
+    public void addListeners() {
         btn3 = (Button) findViewById(R.id.button4);
+        swPenalty = (Switch) findViewById(R.id.switch1);
+        swCommonLastWord = (Switch) findViewById(R.id.switch2);
+
         btn3.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -84,10 +91,27 @@ public class ThirdActivity extends AppCompatActivity {
                         sendTeamsNames(int_btn2);
                         sendWordsCount(int_btn2);
                         sendTime(int_btn2);
+                        sendIsCommonLastWord(int_btn2);
+                        sendIsPenalty(int_btn2);
                         startActivity(int_btn2);
                     }
                 }
         );
+
+        swPenalty.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                isPenalty = isChecked;
+            }
+        });
+
+        swCommonLastWord.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                isCommonLastWord = isChecked;
+            }
+        });
+
     }
     public void sendTeamsNames(Intent _intent) {
         _intent.putExtra("TEAM_1", sTeam1_Name);
@@ -107,5 +131,13 @@ public class ThirdActivity extends AppCompatActivity {
         } else {
             _intent.putExtra("TIME", textView2.getText().toString());
         }
+    }
+
+    public void sendIsPenalty(Intent _intent) {
+            _intent.putExtra("PENALTY", isPenalty);
+    }
+
+    public void sendIsCommonLastWord(Intent _intent) {
+        _intent.putExtra("COMMON_LAST_WORD", isCommonLastWord);
     }
 }
