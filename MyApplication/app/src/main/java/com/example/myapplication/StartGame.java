@@ -70,6 +70,7 @@ public class StartGame extends AppCompatActivity {
                         sendplayingTeam(int_btn1);
                         sendTypeLevel(int_btn1);
                         sendIsPenalty(int_btn1);
+                        sendTeamName(int_btn1);
                         sendIsCommonLastWord(int_btn1);
                         startActivityForResult(int_btn1, 2);
 
@@ -106,6 +107,10 @@ public class StartGame extends AppCompatActivity {
     }
     public void sendplayingTeam(Intent _intent) {
         _intent.putExtra("PLAYING_TEAM", playingTeam);
+    }
+    public void sendTeamName(Intent _intent) {
+        _intent.putExtra("TEAM_NAME1", sTeam1_Name);
+        _intent.putExtra("TEAM_NAME2", sTeam2_Name);
     }
 
     public void sendTypeLevel(Intent _intent) {

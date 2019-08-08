@@ -1,6 +1,9 @@
 package com.example.myapplication;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -21,13 +24,14 @@ import java.util.Random;
 
 public class GamePlay extends AppCompatActivity {
 
-    private String sTeam1_Name, sTeam2_Name;
+    private String sTeam1_Name, sTeam2_Name, sLastWordResult;
     private Integer nGuessedWords = 0, nSkippedWords = 0;
     private String sTime, playingTeam;
     private TextView tvTime, tvSkippedWord, tvGuessedWord, tvPlayingTeam, tvWord;
     private Button btnPause, btnYes, btnNo;
     private CountDownTimer mCountDownTimer;
     private boolean mTimerRunning;
+    private AlertDialog.Builder adLastWord;
 
     private static ArrayList<Integer> arr = new ArrayList<>();
     private ArrayList<String> arrWords = new ArrayList<String>();
@@ -45,6 +49,9 @@ public class GamePlay extends AppCompatActivity {
         playingTeam = getIntent().getStringExtra("PLAYING_TEAM");
 
         sLevelType = getIntent().getStringExtra("LEVEL");
+
+        sTeam1_Name = getIntent().getStringExtra("TEAM_NAME1");
+        sTeam2_Name = getIntent().getStringExtra("TEAM_NAME2");
 
         sTime = getIntent().getStringExtra("TIME");
 
@@ -114,6 +121,7 @@ public class GamePlay extends AppCompatActivity {
                         wordResult.add(true);
                         if (mTimerRunning) {
                             setWord();
+                            onCreateDialog();
                         } else {
                             endGamePlay();
                         }
@@ -258,4 +266,18 @@ public class GamePlay extends AppCompatActivity {
             finish();
         }
     }
+
+    public void onCreateDialog() {
+        final String[] arrNamesTeams = { sTeam1_Name, sTeam2_Name };
+        AlertDialog.Builder builder = new AlertDialog.Builder(GamePlay.this);
+        builder.setTitle("Останнє слово")
+            .setItems(arrNamesTeams, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+
+                }
+            });
+        builder.create();
+        builder.show();
+}
+
 }
